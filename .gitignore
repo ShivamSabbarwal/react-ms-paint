@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Temp folder
 /src/comp
+/src/styles
