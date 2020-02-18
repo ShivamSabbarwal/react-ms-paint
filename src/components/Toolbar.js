@@ -1,20 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 
 const Button = props => {
-  const style = {
-    __html: props.image
-  };
-
   return (
     <div
       className={"button " + (props.active ? "selected" : "")}
-      dangerouslySetInnerHTML={style}
       onClick={e => props.handleClick(e, props.name)}
-    />
+    >
+      <i className={`fas fa-${props.icon} fa-lg`}></i>
+    </div>
   );
 };
 
-export default class Toolbar extends React.Component {
+class Toolbar extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -29,12 +26,14 @@ export default class Toolbar extends React.Component {
       <Button
         active={this.props.activeItem === item.name ? true : false}
         name={item.name}
-        image={item.image}
+        icon={item.icon}
         key={item.name}
         handleClick={this.handleClick}
       />
     ));
 
-    return <div className="Toolbar">{items}</div>;
+    return <div className="toolbar">{items}</div>;
   }
 }
+
+export default Toolbar;

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 
-import Toolbar from "./Toolbar";
+import Toolbox from "./Toolbar";
 
-export default class Content extends React.Component {
+class Canvas extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -125,8 +125,8 @@ export default class Content extends React.Component {
 
   render() {
     return (
-      <div className="content">
-        <Toolbar
+      <div className="container">
+        <Toolbox
           items={this.props.items}
           activeItem={this.props.activeItem}
           handleClick={this.props.handleClick}
@@ -152,3 +152,5 @@ export default class Content extends React.Component {
     );
   }
 }
+
+export default Canvas;

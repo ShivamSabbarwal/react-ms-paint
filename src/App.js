@@ -1,27 +1,25 @@
 import React, { Component } from "react";
 
-// Component Imports
-import ColorPicker from "./components/ColorPicker";
-import Canvas from "./components/Canvas";
-
-// Image Imports
-import pencil from "./images/pencil.svg";
-import fill from "./images/fill.svg";
-import picker from "./images/picker.svg";
-
-// Styling Imports
-import "./App.css";
+import Content from "./components/Canvas";
+import ColorPanel from "./components/ColorPicker";
 
 const defaultColor = "black";
 const defaultTool = "Pencil";
 
 const toolbarItems = [
-  { name: "Pencil", image: pencil },
-  { name: "Fill", image: fill },
-  { name: "Picker", image: picker }
+  { name: "Pencil", icon: "pencil-alt" },
+  // { name: "Line", icon: "grip-lines" },
+  // { name: "Brush", icon: "paint-brush" },
+  { name: "Fill", icon: "fill-drip" }
+  // { name: "Text", icon: "font" },
+  // { name: "Rectangle", icon: "square" },
+  // { name: "Circle", icon: "circle" },
+  // { name: "Erase", icon: "eraser" },
+  // { name: "Picker", icon: "eye-dropper" },
+  // { name: "Palette", icon: "palette" }
 ];
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +27,6 @@ export default class App extends Component {
       selectedItem: defaultTool,
       toolbarItems: toolbarItems
     };
-
     this.changeColor = this.changeColor.bind(this);
     this.changeTool = this.changeTool.bind(this);
   }
@@ -44,15 +41,20 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Canvas
+      <React.Fragment>
+        <Content
           items={this.state.toolbarItems}
           activeItem={this.state.selectedItem}
           handleClick={this.changeTool}
           color={this.state.color}
         />
-        <ColorPicker />
-      </div>
+        <ColorPanel
+          selectedColor={this.state.color}
+          handleClick={this.changeColor}
+        />
+      </React.Fragment>
     );
   }
 }
+
+export default App;
