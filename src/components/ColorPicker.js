@@ -2,45 +2,34 @@ import React, { Component } from "react";
 
 const colors = [
   "#000000",
-  "#787878",
-  "#790300",
-  "#757A01",
-  "#007902",
-  "#007778",
-  "#0A0078",
-  "#7B0077",
-  "#767A38",
-  "#003637",
-  "#286FFE",
-  "#083178",
-  "#4C00FE",
-  "#783B00",
   "#FFFFFF",
   "#BBBBBB",
+  "#787878",
   "#FF0E00",
+  "#790300",
   "#FAFF08",
+  "#757A01",
   "#00FF0B",
+  "#007902",
   "#00FEFF",
+  "#007778",
   "#3400FE",
+  "#0A0078",
   "#FF00FE",
+  "#7B0077",
   "#FBFF7A",
+  "#767A38",
   "#00FF7B",
+  "#003637",
   "#76FEFF",
+  "#286FFE",
   "#8270FE",
+  "#083178",
   "#FF0677",
-  "#FF7D36"
+  "#4C00FE",
+  "#FF7D36",
+  "#783B00"
 ];
-
-const SelectedColor = props => {
-  return (
-    <div
-      className="color-selected"
-      style={{
-        backgroundColor: props.color
-      }}
-    />
-  );
-};
 
 const Color = props => {
   return (
@@ -67,8 +56,6 @@ class ColorPicker extends Component {
   handleClick(event) {
     this.props.handleClick(event);
   }
-
-
 
   render() {
     const colorItems = colors.map(color => (
