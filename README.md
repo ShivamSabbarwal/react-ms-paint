@@ -21,7 +21,6 @@ React MS Paint is a small SPA replica of the Original Mircosoft Paint. This vers
 ## To-Do
 
 - Implement Flood Fill Tool
-- Implement resize canvas
 
 ## Used libraries
 
