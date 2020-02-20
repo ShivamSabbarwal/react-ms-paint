@@ -8,15 +8,7 @@ const defaultTool = "Pencil";
 
 const toolbarItems = [
   { name: "Pencil", icon: "pencil-alt" },
-  // { name: "Line", icon: "grip-lines" },
-  // { name: "Brush", icon: "paint-brush" },
   { name: "Fill", icon: "fill-drip" }
-  // { name: "Text", icon: "font" },
-  // { name: "Rectangle", icon: "square" },
-  // { name: "Circle", icon: "circle" },
-  // { name: "Erase", icon: "eraser" },
-  // { name: "Picker", icon: "eye-dropper" },
-  // { name: "Palette", icon: "palette" }
 ];
 
 class App extends Component {
@@ -47,7 +39,10 @@ class App extends Component {
           activeItem={this.state.selectedItem}
           handleClick={this.changeTool}
           color={this.state.color}
+          canvasHeight={this.state.canvasHeight}
+          canvasWidth={this.state.canvasWidth}
         />
+
         <ColorPanel
           selectedColor={this.state.color}
           handleClick={this.changeColor}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import Toolbox from "./Toolbar";
 
@@ -11,8 +11,8 @@ class Canvas extends Component {
       offsetY: 0,
       startX: 0,
       startY: 0,
-      width: 800,
-      height: 600
+      width: 750,
+      height: 400
     };
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -21,6 +21,8 @@ class Canvas extends Component {
     this.canvasOverlayRef = React.createRef();
     this.ctx = null;
     this.overlayCtx = null;
+    this.handleHeightChange = this.handleHeightChange.bind(this);
+    this.handleWidthChange = this.handleWidthChange.bind(this);
   }
 
   componentDidMount() {
@@ -67,94 +69,87 @@ class Canvas extends Component {
 
   handleMouseMove(e) {
     let ctx = this.ctx;
-    let ctxOverlay = this.ctxOverlay;
 
     if (this.state.isDrawing) {
-      if (
-        this.props.activeItem === "Pencil"
-        // || this.props.activeItem === "Brush"
-      ) {
+      if (this.props.activeItem === "Pencil") {
         ctx.lineTo(
           e.clientX - this.state.offsetX,
           e.clientY - this.state.offsetY
         );
         ctx.stroke();
       }
-      // if (this.props.activeItem === "Line") {
-      //   ctxOverlay.clearRect(0, 0, this.state.width, this.state.height);
-      //   ctxOverlay.beginPath();
-      //   ctxOverlay.moveTo(this.state.startX, this.state.startY);
-      //   ctxOverlay.lineTo(
-      //     e.clientX - this.state.offsetX,
-      //     e.clientY - this.state.offsetY
-      //   );
-      //   ctxOverlay.stroke();
-      //   ctxOverlay.closePath();
-      // }
-      // if (this.props.activeItem === "Rectangle") {
-      //   ctxOverlay.clearRect(0, 0, this.state.width, this.state.height);
-      //   let width = e.clientX - this.state.offsetX - this.state.startX;
-      //   let height = e.clientY - this.state.offsetY - this.state.startY;
-      //   ctxOverlay.strokeRect(
-      //     this.state.startX,
-      //     this.state.startY,
-      //     width,
-      //     height
-      //   );
-      // }
     }
   }
 
   handleMouseUp(e) {
     let ctx = this.ctx;
-
-    // if (this.props.activeItem === "Line") {
-    //   this.ctxOverlay.clearRect(0, 0, this.state.width, this.state.height);
-    //   ctx.moveTo(this.state.startX, this.state.startY);
-    //   ctx.lineTo(
-    //     e.clientX - this.state.offsetX,
-    //     e.clientY - this.state.offsetY
-    //   );
-    //   ctx.stroke();
-    // }
-
-    // if (this.props.activeItem === "Rectangle") {
-    //   let width = e.clientX - this.state.offsetX - this.state.startX;
-    //   let height = e.clientY - this.state.offsetY - this.state.startY;
-    //   this.ctxOverlay.clearRect(0, 0, this.state.width, this.state.height);
-    //   ctx.strokeRect(this.state.startX, this.state.startY, width, height);
-    // }
-
     ctx.closePath();
     this.setState({ isDrawing: false });
   }
 
+  handleHeightChange(event) {
+    this.setState({ height: event.target.value });
+  }
+
+  handleWidthChange(event) {
+    this.setState({ width: event.target.value });
+  }
+
   render() {
     return (
-      <div className="container">
-        <Toolbox
-          items={this.props.items}
-          activeItem={this.props.activeItem}
-          handleClick={this.props.handleClick}
-        />
-        <div className="canvas">
-          <canvas
-            className="canvas-actual"
-            width={`${this.state.width}px`}
-            height={`${this.state.height}px`}
-            ref={this.canvasRef}
-            onMouseDown={this.handleMouseDown}
-            onMouseMove={this.handleMouseMove}
-            onMouseUp={this.handleMouseUp}
+      <Fragment>
+        <form>
+          <div className="row">
+            <div class="col">
+              <input
+                className="input"
+                type="number"
+                min="10"
+                value={this.state.height}
+                onChange={this.handleHeightChange}
+                required
+              />
+              <label>Height</label>
+            </div>
+            <div class="col">
+              <input
+                className="input"
+                type="number"
+                min="10"
+                value={this.state.width}
+                onChange={this.handleWidthChange}
+                required
+              />
+              <label for="canvas-width">Width</label>
+              <span class="underline"></span>
+            </div>
+          </div>
+        </form>
+        <div className="container">
+          <Toolbox
+            items={this.props.items}
+            activeItem={this.props.activeItem}
+            handleClick={this.props.handleClick}
           />
-          <canvas
-            className="canvas-overlay"
-            width={`${this.state.width}px`}
-            height={`${this.state.height}px`}
-            ref={this.canvasOverlayRef}
-          />
+          <div className="canvas">
+            <canvas
+              className="canvas-actual"
+              width={`${this.state.width}px`}
+              height={`${this.state.height}px`}
+              ref={this.canvasRef}
+              onMouseDown={this.handleMouseDown}
+              onMouseMove={this.handleMouseMove}
+              onMouseUp={this.handleMouseUp}
+            />
+            <canvas
+              className="canvas-overlay"
+              width={`${this.state.width}px`}
+              height={`${this.state.height}px`}
+              ref={this.canvasOverlayRef}
+            />
+          </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

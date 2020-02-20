@@ -57,12 +57,18 @@ const Color = props => {
 class ColorPicker extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      canvasHeight: 800,
+      canvasWidth: 600
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(event) {
     this.props.handleClick(event);
   }
+
+
 
   render() {
     const colorItems = colors.map(color => (
@@ -73,6 +79,7 @@ class ColorPicker extends Component {
       <div style={{ display: "flex", alignItems: "center" }}>
         <SelectedColor color={this.props.selectedColor} />
         <div className="color-panel">{colorItems}</div>
+        
       </div>
     );
   }
