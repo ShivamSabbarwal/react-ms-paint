@@ -7,11 +7,12 @@
 .canvas {
   flex: 1;
   padding: 5px;
-  background-color: #a7a7a7;
+  background-color: #c5c5c5;
 
   .canvas-actual {
     cursor: crosshair;
     background-color: white;
+    border-radius: 0.5em;
   }
 
   .canvas-overlay {
@@ -31,11 +32,11 @@ input {
 }
 
 .row {
-  max-width: 800px;
+  // max-width: 800px;
   margin: 0 auto;
   color: #fff;
-  text-align: center;
-  
+  // text-align: center;
+
   .col {
     position: relative;
     display: inline-block;
@@ -47,11 +48,11 @@ input {
   width: 215px;
   padding: 10px 0 10px 15px;
   font-weight: 400;
-  background: white;
+  background: #dbdbdb;
   border: 0;
   border-radius: 3px;
   text-indent: 70px;
-  
+
   + label {
     display: inline-block;
     position: absolute;
@@ -62,6 +63,7 @@ input {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     overflow: hidden;
-      background: gray;
+    background: gray;
+    font-weight: bold;
   }
 }

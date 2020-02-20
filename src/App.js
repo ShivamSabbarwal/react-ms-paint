@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Content from "./components/Canvas";
+import Canvas from "./components/Canvas";
 import ColorPanel from "./components/ColorPicker";
 
 const defaultColor = "black";
@@ -34,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Content
+        <Canvas
           items={this.state.toolbarItems}
           activeItem={this.state.selectedItem}
           handleClick={this.changeTool}

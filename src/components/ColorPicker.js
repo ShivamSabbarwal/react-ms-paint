@@ -77,9 +77,8 @@ class ColorPicker extends Component {
 
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
-        <SelectedColor color={this.props.selectedColor} />
+        {/* <SelectedColor color={this.props.selectedColor} /> */}
         <div className="color-panel">{colorItems}</div>
-        
       </div>
     );
   }

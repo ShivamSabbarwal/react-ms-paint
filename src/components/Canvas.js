@@ -120,8 +120,7 @@ class Canvas extends Component {
                 onChange={this.handleWidthChange}
                 required
               />
-              <label for="canvas-width">Width</label>
-              <span class="underline"></span>
+              <label>Width</label>
             </div>
           </div>
         </form>
