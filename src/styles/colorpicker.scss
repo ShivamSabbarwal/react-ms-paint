@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   background-color: gray;
   border-radius: 0.5em;
-  margin: 10px 0 10px  50px;
+  margin: 10px 0 10px 50px;
 
   .color {
     border: 1px solid white;
@@ -21,4 +21,13 @@
       transition: transform 0.2s;
     }
   }
+}
+
+.color-selected {
+  border: 1px solid white;
+  border-radius: 2em;
+  box-sizing: border-box;
+  height: 20px;
+  width: 50px;
+  margin: 5px 20px 5px 15px;
 }

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Canvas from "./components/Canvas";
 import ColorPanel from "./components/ColorPicker";
 
-const defaultColor = "black";
+const defaultColor = "#000000";
 const defaultTool = "Pencil";
 
 const toolbarItems = [

@@ -14,12 +14,6 @@
     background-color: white;
     border-radius: 0.5em;
   }
-
-  .canvas-overlay {
-    position: absolute;
-    transform: translateX(-100%);
-    pointer-events: none;
-  }
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

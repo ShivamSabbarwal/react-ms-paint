@@ -43,6 +43,17 @@ const Color = props => {
   );
 };
 
+const SelectedColor = props => {
+  return (
+    <div
+      className="color-selected"
+      style={{
+        backgroundColor: props.color
+      }}
+    />
+  );
+};
+
 class ColorPicker extends Component {
   constructor(props) {
     super(props);
@@ -64,8 +75,10 @@ class ColorPicker extends Component {
 
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
-        {/* <SelectedColor color={this.props.selectedColor} /> */}
-        <div className="color-panel">{colorItems}</div>
+        <div className="color-panel">
+          <SelectedColor color={this.props.selectedColor} />
+          {colorItems}
+        </div>
       </div>
     );
   }

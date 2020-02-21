@@ -1,6 +1,30 @@
 import React, { Component, Fragment } from "react";
 
 import Toolbox from "./Toolbar";
+import { FloodFill } from "./FloodFill";
+
+const colorToRBG = color => {
+  if (color[0] === "#") {
+    // hex notation
+    color = color.replace("#", "");
+    const bigint = parseInt(color, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r: r, g: g, b: b };
+  } else if (color.indexOf("rgb(") === 0) {
+    // already in rgba notation
+    color = color
+      .replace("rgba(", "")
+      .replace(" ", "")
+      .replace(")", "")
+      .split(",");
+    return { r: color[0], g: color[1], b: color[2] };
+  } else {
+    console.error("warning: can't convert color to rgba: " + color);
+    return { r: 0, g: 0, b: 0, a: 0 };
+  }
+};
 
 class Canvas extends Component {
   constructor(props) {
@@ -17,27 +41,29 @@ class Canvas extends Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
-    this.canvasRef = React.createRef();
-    this.canvasOverlayRef = React.createRef();
-    this.ctx = null;
-    this.overlayCtx = null;
     this.handleHeightChange = this.handleHeightChange.bind(this);
     this.handleWidthChange = this.handleWidthChange.bind(this);
+
+    this.canvasRef = React.createRef();
+    this.ctx = null;
   }
 
   componentDidMount() {
-    let canvasRef = this.canvasRef.current;
-    let canvasOverlayRef = this.canvasOverlayRef.current;
-    let canvasRect = canvasRef.getBoundingClientRect();
+    const canvasRef = this.canvasRef.current;
+    const canvasRect = canvasRef.getBoundingClientRect();
 
     this.ctx = canvasRef.getContext("2d");
-    this.ctxOverlay = canvasOverlayRef.getContext("2d");
     this.setState({ offsetX: canvasRect.left, offsetY: canvasRect.top });
+  }
+
+  handleMouseUp(e) {
+    let ctx = this.ctx;
+    ctx.closePath();
+    this.setState({ isDrawing: false });
   }
 
   handleMouseDown(e) {
     let ctx = this.ctx;
-    let ctxOverlay = this.ctxOverlay;
     let activeItem = this.props.activeItem;
 
     this.setState({ isDrawing: true });
@@ -46,25 +72,20 @@ class Canvas extends Component {
     ctx.lineWidth = 1;
     ctx.lineJoin = ctx.lineCap = "round";
 
-    if (
-      activeItem === "Pencil"
-      // || activeItem === "Brush"
-    ) {
+
+    if (activeItem === "Pencil") {
       ctx.moveTo(
         e.clientX - this.state.offsetX,
         e.clientY - this.state.offsetY
       );
-      // if (activeItem === "Brush") ctx.lineWidth = 5;
+    } else if (activeItem === "Fill") {
+      FloodFill(
+        ctx,
+        e.clientX - this.state.offsetX,
+        e.clientY - this.state.offsetY,
+        colorToRBG(this.props.color)
+      );
     }
-    // else if (activeItem === "Line" || activeItem === "Rectangle") {
-    //   ctxOverlay.strokeStyle = this.props.color;
-    //   ctxOverlay.lineWidth = 1;
-    //   ctxOverlay.lineJoin = ctx.lineCap = "round";
-    //   this.setState({
-    //     startX: e.clientX - this.state.offsetX,
-    //     startY: e.clientY - this.state.offsetY
-    //   });
-    // }
   }
 
   handleMouseMove(e) {
@@ -81,12 +102,6 @@ class Canvas extends Component {
     }
   }
 
-  handleMouseUp(e) {
-    let ctx = this.ctx;
-    ctx.closePath();
-    this.setState({ isDrawing: false });
-  }
-
   handleHeightChange(event) {
     this.setState({ height: event.target.value });
   }
@@ -100,7 +115,7 @@ class Canvas extends Component {
       <Fragment>
         <form>
           <div className="row">
-            <div class="col">
+            <div className="col">
               <input
                 className="input"
                 type="number"
@@ -111,7 +126,7 @@ class Canvas extends Component {
               />
               <label>Height</label>
             </div>
-            <div class="col">
+            <div className="col">
               <input
                 className="input"
                 type="number"
@@ -139,12 +154,6 @@ class Canvas extends Component {
               onMouseDown={this.handleMouseDown}
               onMouseMove={this.handleMouseMove}
               onMouseUp={this.handleMouseUp}
-            />
-            <canvas
-              className="canvas-overlay"
-              width={`${this.state.width}px`}
-              height={`${this.state.height}px`}
-              ref={this.canvasOverlayRef}
             />
           </div>
         </div>
